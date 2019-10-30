@@ -27,19 +27,38 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using UseJCR6;
+using TrickyUnits;
+
 namespace Void {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class Void : Game {
+        bool StopIt = false;
+        internal readonly TJCRDIR JCR;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        public void FatalError(string msg) {
+            Confirm.Annoy(msg, "Void - FATAL ERROR", System.Windows.Forms.MessageBoxIcon.Error);
+        }
+
+        public void Assert(bool c,string msg) {
+            if (!c) FatalError(msg);
+        }
+        public void Assert(int c, string msg) => Assert(c != 0, msg);
+        public void Assert(string c, string msg) => Assert(c.Length, msg);
+        public void Assert(object c, string msg) => Assert(c != null, msg);
 
         public Void() {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-100;
 
+            new JCR6_lzma();
+            JCR = JCR6.Dir($"{qstr.StripExt(MKL.MyExe)}.jcr");
+            Assert(JCR, "Void.jcr has not been properly loaded!");
 
             Content.RootDirectory = "Content";
         }
@@ -81,7 +100,7 @@ namespace Void {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (StopIt || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
@@ -94,7 +113,7 @@ namespace Void {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
 

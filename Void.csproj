@@ -41,6 +41,90 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\Common\CommandLineParser.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\Common\CommandLineParser.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\Common\CRC.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\Common\CRC.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\Common\InBuffer.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\Common\InBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\Common\OutBuffer.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\Common\OutBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\ICoder\ICoder.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\ICoder\ICoder.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\lzma2jcr6.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\lzma2jcr6.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZMA\LzmaBase.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZMA\LzmaBase.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZMA\LzmaDecoder.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZMA\LzmaDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZMA\LzmaEncoder.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZMA\LzmaEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZ\IMatchFinder.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZ\IMatchFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZ\LzBinTree.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZ\LzBinTree.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZ\LzInWindow.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZ\LzInWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\LZ\LzOutWindow.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\LZ\LzOutWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\RangeCoder\RangeCoder.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\RangeCoder\RangeCoder.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\RangeCoder\RangeCoderBit.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\RangeCoder\RangeCoderBit.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\RangeCoder\RangeCoderBitTree.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\RangeCoder\RangeCoderBitTree.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\Drivers\Compression\lzma\SevenZipHelper.cs">
+      <Link>Dependencies\JCR6\Compression\lzma\SevenZipHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\JCR6\JCR6.cs">
+      <Link>Dependencies\JCR6\JCR6.cs</Link>
+    </Compile>
+    <Compile Include="..\TQMG\TQMG.cs">
+      <Link>Dependencies\Tricky%27s Units\TQMG.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\Dirry.cs">
+      <Link>Dependencies\Tricky%27s Units\Dirry.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\FileList.cs">
+      <Link>Dependencies\Tricky%27s Units\FileList.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\FormConfirm.cs">
+      <Link>Dependencies\Tricky%27s Units\FormConfirm.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\FormSelectFiles.cs">
+      <Link>Dependencies\Tricky%27s Units\FormSelectFiles.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\GINI Is Not Ini.cs">
+      <Link>Dependencies\Tricky%27s Units\GINI Is Not Ini.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\Maps.cs">
+      <Link>Dependencies\Tricky%27s Units\Maps.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\mkl.cs">
+      <Link>Dependencies\Tricky%27s Units\mkl.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\qstr.cs">
+      <Link>Dependencies\Tricky%27s Units\qstr.cs</Link>
+    </Compile>
+    <Compile Include="..\TrickyUnits\qstream.cs">
+      <Link>Dependencies\Tricky%27s Units\qstream.cs</Link>
+    </Compile>
     <Compile Include="Void.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,6 +134,7 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+    <None Include="..\JCR6\Drivers\Compression\lzma\readme.md">
+      <Link>Dependencies\JCR6\Compression\lzma\readme.md</Link>
+    </None>
     <None Include="app.manifest" />
     <None Include="Void.jcr">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
