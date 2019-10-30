@@ -23,7 +23,7 @@
 // 
 // Version: 19.10.30
 // EndLic
-ï»¿using System;
+using System;
 
 namespace Void {
 #if WINDOWS || LINUX
