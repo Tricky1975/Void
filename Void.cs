@@ -37,6 +37,10 @@ namespace Void {
 
         public Void() {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-100;
+
+
             Content.RootDirectory = "Content";
         }
 
