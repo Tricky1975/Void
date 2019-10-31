@@ -27,6 +27,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using System;
 using UseJCR6;
 using TrickyUnits;
 using Void.Stages;
@@ -57,14 +58,23 @@ namespace Void {
         static public void Assert(string c, string msg) => Assert(c.Length, msg);
         static public void Assert(object c, string msg) => Assert(c != null, msg);
 
+        static internal TQMGFont Font;
+
         public Void() {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width-5;
             graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height-100;
 
-            new JCR6_lzma();
-            JCR = JCR6.Dir($"{qstr.StripExt(MKL.MyExe)}.jcr");
-            Assert(JCR, "Void.jcr has not been properly loaded!");            
+            try {
+                new JCR6_lzma();
+                JCR = JCR6.Dir($"{qstr.StripExt(MKL.MyExe)}.jcr"); Assert(JCR, "Void.jcr has not been properly loaded!");
+            } catch (Exception QuelleCatastrophe) {
+#if DEBUG
+                FatalError($"Exception Thrown:\n{QuelleCatastrophe.Message}\n\n{QuelleCatastrophe.StackTrace}");
+#else
+                FatalError($"Exception Thrown:\n{QuelleCatastrophe.Message}");
+#endif
+            }
 
             Content.RootDirectory = "Content";
         }
@@ -87,13 +97,20 @@ namespace Void {
         /// </summary>
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            TQMG.Init(graphics, GraphicsDevice, spriteBatch, JCR);
-            MousePointer = TQMG.GetImage("Mouse.png");
-            Assert(MousePointer, JCR6.JERROR);
+            try {
+                spriteBatch = new SpriteBatch(GraphicsDevice);
+                TQMG.Init(graphics, GraphicsDevice, spriteBatch, JCR);
+                MousePointer = TQMG.GetImage("Mouse.png"); Assert(MousePointer, JCR6.JERROR);
+                Font = TQMG.GetFont("DosFont.JFBF"); Assert(Font, JCR6.JERROR);
+                Stage.GoTo(new Editor());
+            } catch (Exception QuelleCatastrophe) {
+#if DEBUG
+                FatalError($"Exception Thrown:\n{QuelleCatastrophe.Message}\n\n{QuelleCatastrophe.StackTrace}");
+#else
+                FatalError($"Exception Thrown:\n{QuelleCatastrophe.Message}");
+#endif
+            }
 
-            Stage.GoTo(new Editor());
-            
             // TODO: use this.Content to load your game content here
         }
 

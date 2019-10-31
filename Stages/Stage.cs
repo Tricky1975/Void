@@ -45,7 +45,7 @@ namespace Void.Stages {
             Void.Assert(Stages[name], $"Stage \"{name}\" apparently doesn't exist!");
             GoTo(Stages[name]);
         }
-        public void GoTo(Stage s) { if (s != null) Current = s; }
+        public static void GoTo(Stage s) { if (s != null) Current = s; }
     }
 }
 
