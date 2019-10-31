@@ -33,9 +33,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Void")]
 [assembly: AssemblyProduct("Void")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright Ã‚Â©  2019")]
+[assembly: AssemblyDescription("Void - Simplistic IDE for NIL")]
+[assembly: AssemblyCompany("JBC Soft")]
+[assembly: AssemblyCopyright("Copyright © Jeroen P. Broks  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
