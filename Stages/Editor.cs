@@ -28,24 +28,36 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
+using TrickyUnits;
 
 using Void.Parts;
 
 namespace Void.Stages {
     class Editor:Stage {
 
+        int TextX => 0;
+        int TextY => 20;
+
+        readonly int TextW;
+        int TextH = TQMG.ScrHeight - 40;
+
         #region Init
         public Editor() {
             Register("Editor");
+            TextW = (int)Math.Floor(TQMG.ScrWidth * .75);
         }
         #endregion
 
         #region Callbacks
         public override void Draw() {
-            // Project FileList
 
             // Document Content
+            Void.VoidBack.Draw((TextX + (TextW / 2)) - (Void.VoidBack.Width / 2), (TextY + (TextH / 2)) - (Void.VoidBack.Height / 2));
+
+            // Project FileList + Outline
+            Void.Back.Draw(TextX + TextW, TextY, TextX + TextW, TextY, TQMG.ScrWidth - (TextX + TextW), TextW);
+
 
             // PullDown
             PullDownMenus.Draw();

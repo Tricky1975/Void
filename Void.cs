@@ -42,6 +42,7 @@ namespace Void {
         TQMGImage MousePointer;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static internal TQMGImage VoidBack;
 
         static public KeyboardState kb { get; private set; }
         static public MouseState ms { get; private set; }
@@ -104,6 +105,7 @@ namespace Void {
                 MousePointer = TQMG.GetImage("Mouse.png"); Assert(MousePointer, JCR6.JERROR);
                 Font = TQMG.GetFont("DosFont.JFBF"); Assert(Font, JCR6.JERROR);
                 Back = TQMG.GetImage("Back.png");
+                VoidBack = TQMG.GetImage("Void.png");
                 Stage.GoTo(new Editor());
             } catch (Exception QuelleCatastrophe) {
 #if DEBUG
