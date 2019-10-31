@@ -23,7 +23,8 @@
 // 
 // Version: 19.10.31
 // EndLic
-ï»¿using System;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,12 +35,17 @@ using TrickyUnits;
 namespace Void.Stages {
     abstract class Stage {
         readonly protected static TMap<string, Stage> Stages = new TMap<string, Stage>();
+        protected static Stage Current = null;
 
         abstract public void Draw();
         abstract public void Update();
 
         protected void Register(string name) { Stages[name] = this; }
-        
+        public void GoTo(string name) {
+            Void.Assert(Stages[name], $"Stage \"{name}\" apparently doesn't exist!");
+            GoTo(Stages[name]);
+        }
+        public void GoTo(Stage s) { if (s != null) Current = s; }
     }
 }
 
