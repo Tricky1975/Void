@@ -12,6 +12,8 @@ namespace Void.Stages {
 
         abstract public void Draw();
         abstract public void Update();
+
+        protected void Register(string name) { Stages[name] = this; }
         
     }
 }
