@@ -23,7 +23,7 @@
 // 
 // Version: 19.10.31
 // EndLic
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
