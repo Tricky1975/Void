@@ -150,6 +150,8 @@ namespace Void {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, null, null);
             // Stage
 
+            Stage.DrawStage();
+
             // Mouse
             TQMG.Color(255, 255, 255); if (ms.X>0 && ms.Y>0) MousePointer.Draw(ms.X, ms.Y);
             
