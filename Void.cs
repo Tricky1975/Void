@@ -29,6 +29,7 @@ using Microsoft.Xna.Framework.Input;
 
 using UseJCR6;
 using TrickyUnits;
+using Void.Stages;
 
 namespace Void {
     /// <summary>
@@ -37,19 +38,24 @@ namespace Void {
     public class Void : Game {
         bool StopIt = false;
         internal readonly TJCRDIR JCR;
+        TQMGImage MousePointer;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public void FatalError(string msg) {
+        static public KeyboardState kb { get; private set; }
+        static public MouseState ms { get; private set; }
+
+
+        static public void FatalError(string msg) {
             Confirm.Annoy(msg, "Void - FATAL ERROR", System.Windows.Forms.MessageBoxIcon.Error);
         }
 
-        public void Assert(bool c,string msg) {
+        static public void Assert(bool c,string msg) {
             if (!c) FatalError(msg);
         }
-        public void Assert(int c, string msg) => Assert(c != 0, msg);
-        public void Assert(string c, string msg) => Assert(c.Length, msg);
-        public void Assert(object c, string msg) => Assert(c != null, msg);
+        static public void Assert(int c, string msg) => Assert(c != 0, msg);
+        static public void Assert(string c, string msg) => Assert(c.Length, msg);
+        static public void Assert(object c, string msg) => Assert(c != null, msg);
 
         public Void() {
             graphics = new GraphicsDeviceManager(this);
@@ -58,7 +64,7 @@ namespace Void {
 
             new JCR6_lzma();
             JCR = JCR6.Dir($"{qstr.StripExt(MKL.MyExe)}.jcr");
-            Assert(JCR, "Void.jcr has not been properly loaded!");
+            Assert(JCR, "Void.jcr has not been properly loaded!");            
 
             Content.RootDirectory = "Content";
         }
@@ -82,7 +88,10 @@ namespace Void {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            TQMG.Init(graphics, GraphicsDevice, spriteBatch, JCR);
+            MousePointer = TQMG.GetImage("Mouse.png");
+            Assert(MousePointer, JCR6.JERROR);
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -100,7 +109,9 @@ namespace Void {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
-            if (StopIt || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            ms = Mouse.GetState();
+            kb = Keyboard.GetState();
+            if (StopIt || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 Exit();
 
             // TODO: Add your update logic here
@@ -115,7 +126,14 @@ namespace Void {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.LinearWrap, null, null);
+            // Stage
+
+            // Mouse
+            TQMG.Color(255, 255, 255); if (ms.X>0 && ms.Y>0) MousePointer.Draw(ms.X, ms.Y);
+            
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
