@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using TrickyUnits;
 
 namespace Void.Parts {
 
@@ -56,6 +56,14 @@ namespace Void.Parts {
             get => Lines.ElementAt(l).ToString();
             set => Lines.ElementAt(l).Define(value);            
         }
+
+        public override string ToString() {
+            var ret = new StringBuilder(1);
+            foreach (Line l in Lines) ret.Append($"{l}");
+            return $"{ret}";
+        }
+
+        public void Save(string file) => QuickStream.SaveString(file, $"{this}");
 
     }
 }
