@@ -30,6 +30,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Void.Parts;
+
 namespace Void.Stages {
     class Editor:Stage {
 
@@ -41,7 +43,13 @@ namespace Void.Stages {
 
         #region Callbacks
         public override void Draw() {
-            
+            // Project FileList
+
+            // Document Content
+
+            // PullDown
+            PullDownMenus.Draw();
+
         }
 
         public override void Update() {

@@ -58,7 +58,8 @@ namespace Void {
         static public void Assert(string c, string msg) => Assert(c.Length, msg);
         static public void Assert(object c, string msg) => Assert(c != null, msg);
 
-        static internal TQMGFont Font;
+        static internal TQMGFont Font { get; private set; } = null;
+        static internal TQMGImage Back { get; private set; } = null;
 
         public Void() {
             graphics = new GraphicsDeviceManager(this);
@@ -102,6 +103,7 @@ namespace Void {
                 TQMG.Init(graphics, GraphicsDevice, spriteBatch, JCR);
                 MousePointer = TQMG.GetImage("Mouse.png"); Assert(MousePointer, JCR6.JERROR);
                 Font = TQMG.GetFont("DosFont.JFBF"); Assert(Font, JCR6.JERROR);
+                Back = TQMG.GetImage("Back.png");
                 Stage.GoTo(new Editor());
             } catch (Exception QuelleCatastrophe) {
 #if DEBUG
