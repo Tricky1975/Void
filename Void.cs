@@ -91,6 +91,8 @@ namespace Void {
             TQMG.Init(graphics, GraphicsDevice, spriteBatch, JCR);
             MousePointer = TQMG.GetImage("Mouse.png");
             Assert(MousePointer, JCR6.JERROR);
+
+            Stage.GoTo(new Editor());
             
             // TODO: use this.Content to load your game content here
         }
@@ -139,5 +141,6 @@ namespace Void {
         }
     }
 }
+
 
 

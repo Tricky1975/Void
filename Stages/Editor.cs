@@ -30,23 +30,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using TrickyUnits;
-
 namespace Void.Stages {
-    abstract class Stage {
-        readonly protected static TMap<string, Stage> Stages = new TMap<string, Stage>();
-        protected static Stage Current = null;
+    class Editor:Stage {
 
-        abstract public void Draw();
-        abstract public void Update();
-
-        protected void Register(string name) { Stages[name] = this; }
-        public static void GoTo(string name) {
-            Void.Assert(Stages[name], $"Stage \"{name}\" apparently doesn't exist!");
-            GoTo(Stages[name]);
+        #region Init
+        public Editor() {
+            Register("Editor");
         }
-        public void GoTo(Stage s) { if (s != null) Current = s; }
+        #endregion
+
+        #region Callbacks
+        public override void Draw() {
+            
+        }
+
+        public override void Update() {
+            
+        }
+
+        public override string ToString() => "Editor!";
+        #endregion
+
+
+
     }
 }
-
 
