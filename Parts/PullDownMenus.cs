@@ -73,7 +73,7 @@ namespace Void.Parts {
             Top[id] = this;
             switch (id) {
                 case Heads.File:
-                    new PullDownMenus(id, "Open Project Folder", Project.OpenProject, Keys.F);
+                    new PullDownMenus(id, "Open Project Folder", Project.OpenProject, Keys.P);
                     new PullDownMenus(id, "Save", NOTHING, Keys.S);
                     new PullDownMenus(id, "Save As", NOTHING);
                     new PullDownMenus(id, "Save All", NOTHING);
@@ -138,9 +138,12 @@ namespace Void.Parts {
 
         static public void Update() {
             foreach (Heads h in (Heads[])Enum.GetValues(typeof(Heads)))
-                foreach(PullDownMenus item in Top[h].Kids) {
-                    if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.kb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl) && item.Require()))
+                foreach (PullDownMenus item in Top[h].Kids) {
+                    //Debug.WriteLine($"{item.QuickKey}; {Void.kb.IsKeyDown(item.QuickKey)}; {Void.oldkb.IsKeyDown(item.QuickKey)}; Control {(Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl))}; {item.Require()}");
+                    if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.oldkb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl)) && item.Require()) {
                         item.CallBack();
+                        Debug.WriteLine($"Executing callback for {item}");
+                    }
                     
                 }
         }
