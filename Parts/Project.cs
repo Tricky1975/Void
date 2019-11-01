@@ -38,5 +38,9 @@ namespace Void.Parts {
                 }
             }
         }
+
+        internal static void OpenProject() {
+            var r = FFS.RequestDir();
+        }
     }
 }

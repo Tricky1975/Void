@@ -44,7 +44,7 @@ namespace Void.Parts {
         public delegate void CallBackVoid();
         public delegate bool RequireBool();
         public enum Heads { File, Edit, Search, Build, Recent }
-        readonly RequireBool Always = delegate { return true};
+        readonly RequireBool Always = delegate { return true; };
 
 
         // Top bar
@@ -73,7 +73,7 @@ namespace Void.Parts {
             Top[id] = this;
             switch (id) {
                 case Heads.File:
-                    new PullDownMenus(id, "Open Project Folder", NOTHING, Keys.F);
+                    new PullDownMenus(id, "Open Project Folder", Project.OpenProject, Keys.F);
                     new PullDownMenus(id, "Save", NOTHING, Keys.S);
                     new PullDownMenus(id, "Save As", NOTHING);
                     new PullDownMenus(id, "Save All", NOTHING);
@@ -139,7 +139,7 @@ namespace Void.Parts {
         static public void Update() {
             foreach (Heads h in (Heads[])Enum.GetValues(typeof(Heads)))
                 foreach(PullDownMenus item in Top[h].Kids) {
-                    if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.kb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl) && item.Require())
+                    if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.kb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl) && item.Require()))
                         item.CallBack();
                     
                 }
