@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Diagnostics;
 using TrickyUnits;
 
 namespace Void.Parts {
@@ -12,7 +13,7 @@ namespace Void.Parts {
         static readonly internal TMap<string, Project > ProjMap = new TMap<string, Project>();
         string ProjectDirectory;
 
-        enum ItemType { NonExistent,File,Directory }
+        internal enum ItemType { NonExistent,File,Directory }
 
         internal class Item {
             public Document Doc=null;
@@ -20,6 +21,7 @@ namespace Void.Parts {
             public Item Parent = null;
             public Project Prj = null;
             public string filename = "";
+            internal ItemType Type;
         }
 
         public Project(string dir) {
@@ -33,15 +35,28 @@ namespace Void.Parts {
                     TreeItemMap[f] = i;
                     var dc = f.Split('/');
                     var cd = ItemMap;
-                    for (int ak = 0; ak < dc.Length - 1; ak++) cd = cd[dc[ak]].SubDirectory;
+                    Item ci = null;
+                    for (int ak = 0; ak < dc.Length - 1; ak++) {
+                        if (cd[dc[ak]] == null) {
+                            var ni = new Item();
+                            cd[dc[ak]] = ni;
+                            ni.Parent = ci;
+                            ni.Type = ItemType.Directory;
+                            ni.Prj = this;                            
+                        }
+                        ci = cd[dc[ak]];
+                        cd = cd[dc[ak]].SubDirectory;
+                        i.Parent = ci;
+                    }
                     cd[qstr.StripDir(f)] = i;
+                    Debug.WriteLine($"Project: {dir};\t\t{f} found and added!");
                 }
             }
         }
 
         internal static void OpenProject() {
             var r = FFS.RequestDir();
-            if (ProjMap[r] == null) ProjMap[r] = new Project(r);
+            if (ProjMap[r] == null) ProjMap[r] = new Project(r); else Debug.WriteLine($"Project  \"{r}\" already loaded, so won't load again!");
 
         }
     }
