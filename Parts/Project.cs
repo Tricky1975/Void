@@ -9,7 +9,7 @@ namespace Void.Parts {
 
         readonly internal TMap<string, Item> ItemMap = new TMap<string, Item>();
         readonly internal TMap<string, Item> TreeItemMap = new TMap<string, Item>();
-        static readonly internal TMap<string, Item> ProjMap = new TMap<string, Item>();
+        static readonly internal TMap<string, Project > ProjMap = new TMap<string, Project>();
         string ProjectDirectory;
 
         enum ItemType { NonExistent,File,Directory }
@@ -41,6 +41,8 @@ namespace Void.Parts {
 
         internal static void OpenProject() {
             var r = FFS.RequestDir();
+            if (ProjMap[r] == null) ProjMap[r] = new Project(r);
+
         }
     }
 }
