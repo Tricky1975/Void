@@ -44,6 +44,11 @@ namespace Void.Stages {
             if (Current != null) Current.Draw();
         }
 
+        static public void UpdateStage() {
+            if (Current != null) Current.Update();
+        }
+
+
         protected void Register(string name) { Stages[name] = this; }
         public static void GoTo(string name) {
             Void.Assert(Stages[name], $"Stage \"{name}\" apparently doesn't exist!");

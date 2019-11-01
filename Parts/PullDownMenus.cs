@@ -138,6 +138,7 @@ namespace Void.Parts {
 
         static public void Update() {
             foreach (Heads h in (Heads[])Enum.GetValues(typeof(Heads)))
+                if (Top[h]!=null)
                 foreach (PullDownMenus item in Top[h].Kids) {
                     //Debug.WriteLine($"{item.QuickKey}; {Void.kb.IsKeyDown(item.QuickKey)}; {Void.oldkb.IsKeyDown(item.QuickKey)}; Control {(Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl))}; {item.Require()}");
                     if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.oldkb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl)) && item.Require()) {

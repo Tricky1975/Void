@@ -140,7 +140,7 @@ namespace Void {
             if (StopIt || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            Stage.UpdateStage();
 
             base.Update(gameTime);
         }
