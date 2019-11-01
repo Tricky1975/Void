@@ -42,7 +42,10 @@ namespace Void.Parts {
     class PullDownMenus {
 
         public delegate void CallBackVoid();
+        public delegate bool RequireBool();
         public enum Heads { File, Edit, Search, Build, Recent }
+        readonly RequireBool Always = delegate { return true};
+
 
         // Top bar
         readonly static TMap<Heads, PullDownMenus> Top = new TMap<Heads, PullDownMenus>();
@@ -54,6 +57,7 @@ namespace Void.Parts {
         readonly Heads ParentTop;
         readonly PullDownMenus Parent;
         readonly CallBackVoid CallBack;
+        readonly RequireBool Require;
         readonly Keys QuickKey = Keys.None;
         
 
@@ -91,7 +95,7 @@ namespace Void.Parts {
             }
         }
 
-        public PullDownMenus(Heads parent, string Caption, CallBackVoid CB, Keys QuickKey=Keys.None,CallBackVoid Requirement=null) {
+        public PullDownMenus(Heads parent, string Caption, CallBackVoid CB, Keys QuickKey=Keys.None,RequireBool Requirement=null) {
             ParentTop = parent;
             Parent = Top[parent];
             Parent.Kids.Add(this);
@@ -99,6 +103,7 @@ namespace Void.Parts {
             CaptGraph = Void.Font.Text(Caption);
             CallBack = CB;
             this.QuickKey = QuickKey;
+            if (Requirement != null) Require = Requirement; else Require = Always;
             Debug.WriteLine($"Created menu item {Caption} in parent {parent}");
         }
 
@@ -129,6 +134,15 @@ namespace Void.Parts {
                 }
                 nix += Top[h].CaptGraph.Width + 10;
             }
+        }
+
+        static public void Update() {
+            foreach (Heads h in (Heads[])Enum.GetValues(typeof(Heads)))
+                foreach(PullDownMenus item in Top[h].Kids) {
+                    if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.kb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl) && item.Require())
+                        item.CallBack();
+                    
+                }
         }
     }
 }

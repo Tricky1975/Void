@@ -65,7 +65,7 @@ namespace Void.Stages {
         }
 
         public override void Update() {
-            
+            PullDownMenus.Update();
         }
 
         public override string ToString() => "Editor!";

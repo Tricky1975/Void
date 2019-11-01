@@ -45,6 +45,7 @@ namespace Void {
         static internal TQMGImage VoidBack;
 
         static public KeyboardState kb { get; private set; }
+        static public KeyboardState oldkb { get; private set; }
         static public MouseState ms { get; private set; }
 
 
@@ -132,6 +133,7 @@ namespace Void {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
+            oldkb = kb;
             ms = Mouse.GetState();
             kb = Keyboard.GetState();
             if (StopIt || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
