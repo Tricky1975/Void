@@ -59,7 +59,7 @@ namespace Void.Parts {
         readonly CallBackVoid CallBack;
         readonly RequireBool Require;
         readonly Keys QuickKey = Keys.None;
-        
+
 
 
 
@@ -95,7 +95,7 @@ namespace Void.Parts {
             }
         }
 
-        public PullDownMenus(Heads parent, string Caption, CallBackVoid CB, Keys QuickKey=Keys.None,RequireBool Requirement=null) {
+        public PullDownMenus(Heads parent, string Caption, CallBackVoid CB, Keys QuickKey = Keys.None, RequireBool Requirement = null) {
             ParentTop = parent;
             Parent = Top[parent];
             Parent.Kids.Add(this);
@@ -119,11 +119,11 @@ namespace Void.Parts {
                     new PullDownMenus(h);
                     Top[h].TopX = nix;
                     Top[h].Caption = $"{h}";
-                    Top[h].CaptGraph = Void.Font.Text(Top[h].Caption, true);                    
+                    Top[h].CaptGraph = Void.Font.Text(Top[h].Caption, true);
                 }
                 if (Selected == Top[h]) {
                     TQMG.Color(0, 255, 255);
-                    TQMG.DrawRectangle(nix - 5, 0, Top[h].CaptGraph.Width + 10,20);
+                    TQMG.DrawRectangle(nix - 5, 0, Top[h].CaptGraph.Width + 10, 20);
                     TQMG.Color(Color.Black);
                 } else {
                     TQMG.Color(0, 255, 255);
@@ -138,15 +138,15 @@ namespace Void.Parts {
 
         static public void Update() {
             foreach (Heads h in (Heads[])Enum.GetValues(typeof(Heads)))
-                if (Top[h]!=null)
-                foreach (PullDownMenus item in Top[h].Kids) {
-                    //Debug.WriteLine($"{item.QuickKey}; {Void.kb.IsKeyDown(item.QuickKey)}; {Void.oldkb.IsKeyDown(item.QuickKey)}; Control {(Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl))}; {item.Require()}");
-                    if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.oldkb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl)) && item.Require()) {
-                        item.CallBack();
-                        Debug.WriteLine($"Executing callback for {item}");
+                if (Top[h] != null)
+                    foreach (PullDownMenus item in Top[h].Kids) {
+                        //Debug.WriteLine($"{item.QuickKey}; {Void.kb.IsKeyDown(item.QuickKey)}; {Void.oldkb.IsKeyDown(item.QuickKey)}; Control {(Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl))}; {item.Require()}");
+                        if (item.QuickKey != Keys.None && Void.kb.IsKeyDown(item.QuickKey) && (!Void.oldkb.IsKeyDown(item.QuickKey)) && (Void.kb.IsKeyDown(Keys.LeftControl) || Void.kb.IsKeyDown(Keys.RightControl)) && item.Require()) {
+                            item.CallBack();
+                            Debug.WriteLine($"Executing callback for {item}");
+                        }
+
                     }
-                    
-                }
         }
     }
 }
