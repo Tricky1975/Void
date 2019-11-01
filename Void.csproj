@@ -126,6 +126,7 @@
       <Link>Dependencies\Tricky%27s Units\qstream.cs</Link>
     </Compile>
     <Compile Include="Parts\Document.cs" />
+    <Compile Include="Parts\Project.cs" />
     <Compile Include="Parts\PullDownMenus.cs" />
     <Compile Include="Stages\Editor.cs" />
     <Compile Include="Stages\Stage.cs" />

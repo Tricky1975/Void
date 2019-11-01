@@ -53,12 +53,13 @@ namespace Void {
             Confirm.Annoy(msg, "Void - FATAL ERROR", System.Windows.Forms.MessageBoxIcon.Error);
         }
 
-        static public void Assert(bool c,string msg) {
+        static public bool Assert(bool c,string msg) {
             if (!c) FatalError(msg);
+            return c;
         }
-        static public void Assert(int c, string msg) => Assert(c != 0, msg);
-        static public void Assert(string c, string msg) => Assert(c.Length, msg);
-        static public void Assert(object c, string msg) => Assert(c != null, msg);
+        static public bool Assert(int c, string msg) => Assert(c != 0, msg);
+        static public bool Assert(string c, string msg) => Assert(c.Length, msg);
+        static public bool Assert(object c, string msg) => Assert(c != null, msg);
 
         static internal TQMGFont Font { get; private set; } = null;
         static internal TQMGImage Back { get; private set; } = null;
