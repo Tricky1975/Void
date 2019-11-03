@@ -55,7 +55,8 @@ namespace Void.Parts {
         }
 
         internal static void OpenProject() {
-            var r = FFS.RequestDir();
+            var r = FFS.RequestDir().Replace("\\","/");
+            if (r == "") return;
             if (ProjMap[r] == null) ProjMap[r] = new Project(r); else Debug.WriteLine($"Project  \"{r}\" already loaded, so won't load again!");
 
         }

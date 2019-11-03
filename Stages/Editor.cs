@@ -29,6 +29,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 using TrickyUnits;
 
 using Void.Parts;
@@ -38,6 +40,8 @@ namespace Void.Stages {
 
         int TextX => 0;
         int TextY => 20;
+
+        int ProjectScroll = 0;
 
         readonly int TextW;
         int TextH = TQMG.ScrHeight - 40;
@@ -55,8 +59,24 @@ namespace Void.Stages {
             // Document Content
             Void.VoidBack.Draw((TextX + (TextW / 2)) - (Void.VoidBack.Width / 2), (TextY + (TextH / 2)) - (Void.VoidBack.Height / 2));
 
-            // Project FileList + Outline
-            Void.Back.Draw(TextX + TextW, TextY, TextX + TextW, TextY, TQMG.ScrWidth - (TextX + TextW), TextW);
+            // Project, FileList and Outline
+            var OutX = TextX + TextW;
+            var OutW = TQMG.ScrWidth - (TextX + TextW);
+            Void.Back.Draw(OutX, TextY, TextX + TextW, TextY, OutW, TextW);
+            TQMG.Color(255, 0, 0);
+            TQMG.SetAlpha(100);
+            TQMG.DrawRectangle(OutX, TextY, OutW, 64);
+            TQMG.Color(255, 255, 0);
+            TQMG.SetAlpha(255);
+            {
+                var y = 0 - ProjectScroll;
+                foreach(string n in Project.ProjMap.Keys) {
+                    if (y>=0 && y < 4) {
+                        Void.Font.DrawText(n, OutX, TextY + (y * 16));
+                        y++;
+                    }
+                }
+            }
 
 
             // PullDown
