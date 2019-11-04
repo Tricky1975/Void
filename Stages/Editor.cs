@@ -42,6 +42,7 @@ namespace Void.Stages {
         int TextY => 20;
 
         int ProjectScroll = 0;
+        int FileScroll = 0;
 
         readonly int TextW;
         int TextH = TQMG.ScrHeight - 40;
@@ -63,8 +64,9 @@ namespace Void.Stages {
             var OutX = TextX + TextW;
             var OutW = TQMG.ScrWidth - (TextX + TextW);
             Void.Back.Draw(OutX, TextY, TextX + TextW, TextY, OutW, TextW);
+            // Project list
             TQMG.Color(255, 0, 0);
-            TQMG.SetAlpha(100);
+            TQMG.SetAlpha(50);
             TQMG.DrawRectangle(OutX, TextY, OutW, 64);
             TQMG.Color(255, 255, 0);
             TQMG.SetAlpha(255);
@@ -76,6 +78,38 @@ namespace Void.Stages {
                         y++;
                     }
                 }
+            }
+
+            // File List
+            TQMG.Color(0, 255, 0);
+            TQMG.SetAlpha(50);
+            TQMG.DrawRectangle(OutX, TextY + 64, OutW, 128);
+            TQMG.Color(180, 255, 0);
+            TQMG.SetAlpha(255);
+            {
+                var y = 0 - FileScroll;
+                void PS(int tab = 0, Project.Item Item = null) {
+                    TMap<string, Project.Item> IL;
+                    if (Item == null) IL = Project.ChosenProject.ItemMap; else IL = Item.SubDirectory;
+                    foreach (string key in IL.Keys) {
+                        var V = IL[key];
+                        switch (V.Type) {
+                            case Project.ItemType.NonExistent:
+                                throw new Exception($"File '{key}' appears to be marked as Non-Existent!");
+                            case Project.ItemType.File:
+                                TQMG.Color(180, 255, 0);
+                                Void.Font.DrawText($"{qstr.Str(" ", tab)}{key}", OutX, TextY + 64 + (TextY * 16));
+                                break;
+                            case Project.ItemType.Directory:
+                                TQMG.Color(255, 255, 0);
+                                Void.Font.DrawText($"{qstr.Str(" ", tab)}{key}/", OutX, TextY + 64 + (TextY * 16));
+                                break;
+                            default:
+                                throw new Exception("Fatal Internal Error! Unknown filetype in file outline");
+                        }
+                    }
+                }
+                if (Project.ChosenProject != null) PS();
             }
 
 

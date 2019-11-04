@@ -11,6 +11,13 @@ namespace Void.Parts {
         readonly internal TMap<string, Item> ItemMap = new TMap<string, Item>();
         readonly internal TMap<string, Item> TreeItemMap = new TMap<string, Item>();
         static readonly internal TMap<string, Project > ProjMap = new TMap<string, Project>();
+        static internal string ChosenProjectID = "";
+        static internal Project ChosenProject {
+            get {
+                if (ChosenProjectID.Trim() == "") return null;
+                return ProjMap[ChosenProjectID];
+            }
+        }
         string ProjectDirectory;
 
         internal enum ItemType { NonExistent,File,Directory }
