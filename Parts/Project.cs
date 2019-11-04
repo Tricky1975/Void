@@ -60,6 +60,7 @@ namespace Void.Parts {
                     Debug.WriteLine($"Project: {dir};\t\t{f} found and added!");
                 }
             }
+            if (!Config.Has("Projects", dir)) Config.Add("Projects", dir);
         }
 
         internal static void OpenProject() {
