@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Diagnostics;
 using TrickyUnits;
 
 namespace Void.Parts {
@@ -37,8 +38,10 @@ namespace Void.Parts {
             if (!File.Exists(ConfigFile)) {
                 CFG = new TGINI();
                 VAL["FILE_CREATED"] = $"{DateTime.Now}";
+                Debug.WriteLine($"Config file \"{ConfigFile}\" created!");
             } else {
                 CFG = GINI.ReadFromFile(ConfigFile);
+                Debug.WriteLine($"Config file \"{ConfigFile}\" loaded!");
             }
         }
     }

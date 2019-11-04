@@ -31,6 +31,7 @@ using System;
 using UseJCR6;
 using TrickyUnits;
 using Void.Stages;
+using Void.Parts;
 
 namespace Void {
     /// <summary>
@@ -109,6 +110,13 @@ namespace Void {
                 Back = TQMG.GetImage("Back.png");
                 VoidBack = TQMG.GetImage("Void.png");
                 Stage.GoTo(new Editor());
+                foreach (string prj in Config.GetL("Projects")) {
+                    if (System.IO.Directory.Exists(prj)) {
+                        Project.ProjMap[prj] = new Project(prj);
+                    } else {
+                        Confirm.Annoy($"Project directory \"{prj}\" has not been found!");
+                    }
+                }
             } catch (Exception QuelleCatastrophe) {
 #if DEBUG
                 FatalError($"Exception Thrown:\n{QuelleCatastrophe.Message}\n\n{QuelleCatastrophe.StackTrace}");
