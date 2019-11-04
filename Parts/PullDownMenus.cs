@@ -74,6 +74,7 @@ namespace Void.Parts {
             switch (id) {
                 case Heads.File:
                     new PullDownMenus(id, "Open Project Folder", Project.OpenProject, Keys.P);
+                    new PullDownMenus(id, "New File", NOTHING, Keys.N,delegate { return Project.ChosenProject != null; } );
                     new PullDownMenus(id, "Save", NOTHING, Keys.S);
                     new PullDownMenus(id, "Save As", NOTHING);
                     new PullDownMenus(id, "Save All", NOTHING);
