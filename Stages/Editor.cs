@@ -74,7 +74,11 @@ namespace Void.Stages {
                 var y = 0 - ProjectScroll;
                 foreach(string n in Project.ProjMap.Keys) {
                     if (y>=0 && y < 4) {
-                        Void.Font.DrawText(n, OutX, TextY + (y * 16));
+                        var iy = TextY + (y * 16);
+                        Void.Font.DrawText(n, OutX, iy);
+                        if (Void.ms.X > OutX && Void.ms.Y > iy && Void.ms.Y < iy + 16 && Void.ms.LeftButton==Microsoft.Xna.Framework.Input.ButtonState.Pressed) {
+                            Project.ChosenProjectID = n;
+                        }
                         y++;
                     }
                 }
@@ -98,15 +102,20 @@ namespace Void.Stages {
                                 throw new Exception($"File '{key}' appears to be marked as Non-Existent!");
                             case Project.ItemType.File:
                                 TQMG.Color(180, 255, 0);
-                                Void.Font.DrawText($"{qstr.Str(" ", tab)}{key}", OutX, TextY + 64 + (TextY * 16));
+                                if (y >= 0 && y < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, TextY + 64 + (y* 16));
+                                y++;
                                 break;
                             case Project.ItemType.Directory:
                                 TQMG.Color(255, 255, 0);
-                                Void.Font.DrawText($"{qstr.Str(" ", tab)}{key}/", OutX, TextY + 64 + (TextY * 16));
+                                if (y >= 0 && y < 8) Void.Font.DrawText($"D> {qstr.Str(" ", tab)}{key}/", OutX, TextY + 64 + (y * 16));
+                                y++;
+                                PS(tab + 1, V);
                                 break;
                             default:
                                 throw new Exception("Fatal Internal Error! Unknown filetype in file outline");
                         }
+                       
+                        
                     }
                 }
                 if (Project.ChosenProject != null) PS();

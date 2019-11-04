@@ -54,6 +54,7 @@ namespace Void.Parts {
                         ci = cd[dc[ak]];
                         cd = cd[dc[ak]].SubDirectory;
                         i.Parent = ci;
+                        i.Type = ItemType.File;
                     }
                     cd[qstr.StripDir(f)] = i;
                     Debug.WriteLine($"Project: {dir};\t\t{f} found and added!");
