@@ -74,8 +74,15 @@ namespace Void.Stages {
                 var y = 0 - ProjectScroll;
                 foreach(string n in Project.ProjMap.Keys) {
                     if (y>=0 && y < 4) {
+                        var n2 = Project.ProjMap[n].CFG["Title"]; if (n2.Length > 40) n2 = $"{qstr.Left(n2, 16)}...{qstr.Right(n2, 16)}";
                         var iy = TextY + (y * 16);
-                        Void.Font.DrawText(n, OutX, iy);
+                        var Txt = Void.Font.Text(n2);
+                        TQMG.Color(255, 255, 0);
+                        if (n == Project.ChosenProjectID) {
+                            TQMG.DrawRectangle(OutX, iy, Txt.Width, 16);
+                            TQMG.Color(255, 0, 0);
+                        }
+                        Txt.Draw(OutX, iy);
                         if (Void.ms.X > OutX && Void.ms.Y > iy && Void.ms.Y < iy + 16 && Void.ms.LeftButton==Microsoft.Xna.Framework.Input.ButtonState.Pressed) {
                             Project.ChosenProjectID = n;
                         }

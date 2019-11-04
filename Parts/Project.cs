@@ -10,7 +10,7 @@ namespace Void.Parts {
 
         readonly internal TMap<string, Item> ItemMap = new TMap<string, Item>();
         readonly internal TMap<string, Item> TreeItemMap = new TMap<string, Item>();
-        static readonly internal TMap<string, Project > ProjMap = new TMap<string, Project>();
+        static readonly internal TMap<string, Project> ProjMap = new TMap<string, Project>();
         static internal string ChosenProjectID = "";
         static internal Project ChosenProject {
             get {
@@ -20,7 +20,15 @@ namespace Void.Parts {
         }
         string ProjectDirectory;
 
-        internal enum ItemType { NonExistent,File,Directory }
+        internal enum ItemType { NonExistent, File, Directory }
+        TGINI GINIConfig;
+        string ConfigFile => $"{ProjectDirectory}/Void_Project.GINI";
+        internal class prjcfg {
+            Project Parent;
+            internal string this[string key] { get => Parent.GINIConfig.C(key); set { Parent.GINIConfig.D(key, value); Parent.GINIConfig.SaveSource(Parent.ConfigFile); } }
+            internal prjcfg(Project Ouder) { Parent = Ouder; }
+        }
+        internal prjcfg CFG;
 
         internal class Item {
             public Document Doc=null;
@@ -61,13 +69,21 @@ namespace Void.Parts {
                 }
             }
             if (!Config.Has("Projects", dir)) Config.Add("Projects", dir);
+            CFG = new prjcfg(this);
+            if (!File.Exists(ConfigFile)) {
+                GINIConfig = new TGINI();
+                CFG["Title"] = dir;
+                CFG["FILE_Created"] = $"{DateTime.Now}";
+            } else {
+                GINIConfig = GINI.ReadFromFile(ConfigFile);
+            }
         }
 
         internal static void OpenProject() {
             var r = FFS.RequestDir().Replace("\\","/");
             if (r == "") return;
             if (ProjMap[r] == null) ProjMap[r] = new Project(r); else Debug.WriteLine($"Project  \"{r}\" already loaded, so won't load again!");
-
+            
         }
     }
 }
