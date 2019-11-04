@@ -43,7 +43,13 @@ namespace Void.Parts {
 
         public delegate void CallBackVoid();
         public delegate bool RequireBool();
-        public enum Heads { File, Edit, Search, Build, Recent }
+        public enum Heads {
+            File,
+            Edit,
+            Search,
+            Build,
+            // Recent 
+        }
         readonly RequireBool Always = delegate { return true; };
 
 
