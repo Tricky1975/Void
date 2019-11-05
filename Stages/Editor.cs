@@ -105,7 +105,7 @@ namespace Void.Stages {
                     foreach (string key in IL.Keys) {
                         var V = IL[key];
                         switch (V.Type) {
-                            case Project.ItemType.NonExistent:
+                            case Project.ItemType.NonExistent:  
                                 throw new Exception($"File '{key}' appears to be marked as Non-Existent!");
                             case Project.ItemType.File:
                                 TQMG.Color(180, 255, 0);
