@@ -111,6 +111,9 @@ namespace Void.Stages {
                                 TQMG.Color(180, 255, 0);
                                 if (y >= 0 && y < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, TextY + 64 + (y* 16));
                                 y++;
+                                if (Void.ms.Y>y && Void.ms.Y<y+16 && Void.ms.X>OutX && Void.ms.X < TQMG.ScrWidth - 10) {
+                                    Project.ChosenProject.CurrentItem = V;
+                                }
                                 break;
                             case Project.ItemType.Directory:
                                 TQMG.Color(255, 255, 0);
