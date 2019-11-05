@@ -114,11 +114,11 @@ namespace Void.Stages {
                                     TQMG.DrawRectangle(OutX, iy, TQMG.ScrWidth - OutX - 10, 16);
                                     TQMG.Color(0, 25, 0);
                                 }
-                                if (iy >= 0 && iy < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, iy);
-                                y++;
-                                if (Void.ms.Y>y && Void.ms.Y<y+16 && Void.ms.X>OutX && Void.ms.X < TQMG.ScrWidth - 10) {
+                                if (y >= 0 && y < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, iy);
+                                if (Void.ms.Y>iy && Void.ms.Y<iy+16 && Void.ms.X>OutX && Void.ms.X < TQMG.ScrWidth - 10) {
                                     Project.ChosenProject.CurrentItem = V;
                                 }
+                                y++;
                                 break;
                             case Project.ItemType.Directory:
                                 TQMG.Color(255, 255, 0);
