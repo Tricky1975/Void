@@ -37,6 +37,9 @@ namespace Void.Parts {
             public Project Prj = null;
             public string filename = "";
             internal ItemType Type;
+            internal void Load() {
+
+            }
         }
 
         public Project(string dir) {

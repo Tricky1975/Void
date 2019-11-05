@@ -128,6 +128,10 @@ namespace Void.Stages {
                 if (Project.ChosenProject != null) PS();
             }
 
+            // Status bar
+            var StatY = TQMG.ScrHeight - 20;
+            TQMG.Color(Color.White);
+            Void.Back.Draw(0, StatY, TQMG.ScrWidth, 20);
 
             // PullDown
             PullDownMenus.Draw();

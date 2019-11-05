@@ -46,12 +46,22 @@ namespace Void.Parts {
                 else
                     throw new Exception("Illegal Line comparing");
             }
+
+            void Chop() {
+                // TODO: Chop up!
+            }
+
             public void Define(string str) {
                 Rawline = str;
-                // TODO: Chop up!
+            }
+            public Line(string s) {
+                Define(s);
+                Chop();
             }
         }
 
+        public bool Modified = false;
+        public int CleanCD;
         List<Line> Lines = new List<Line>();
         public string this[int l] {
             get => Lines.ElementAt(l).ToString();
@@ -64,7 +74,23 @@ namespace Void.Parts {
             return $"{ret}";
         }
 
-        public void Save(string file) => QuickStream.SaveString(file, $"{this}");
+        public void Save(string file) {
+            QuickStream.SaveString(file, $"{this}");
+            Modified = false;
+            CleanCD = 20000;
+            CleanCD = 20000;
+        }
+        public static Document Load(string file) {
+            var s = QuickStream.LoadString(file);
+            return new Document(s);
+        }
+        public Document(string txt) {
+            txt = txt.Replace("\r\n", "\n");
+            foreach(string l in txt.Split('\n')) {
+                var nl = new Line(l);
+                Lines.Add(nl);
+            }
+        }
 
     }
 }
