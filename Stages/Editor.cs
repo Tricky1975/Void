@@ -104,16 +104,17 @@ namespace Void.Stages {
                     if (Item == null) IL = Project.ChosenProject.ItemMap; else IL = Item.SubDirectory;
                     foreach (string key in IL.Keys) {
                         var V = IL[key];
+                        var iy = TextY + 64 + (y * 16);
                         switch (V.Type) {
                             case Project.ItemType.NonExistent:  
                                 throw new Exception($"File '{key}' appears to be marked as Non-Existent!");
                             case Project.ItemType.File:
                                 TQMG.Color(180, 255, 0);
                                 if (V == Project.ChosenProject.CurrentItem) {
-                                    TQMG.DrawRectangle(OutX, TextY + 64 + (y * 16), TQMG.ScrWidth - OutX - 10, 16);
+                                    TQMG.DrawRectangle(OutX, iy, TQMG.ScrWidth - OutX - 10, 16);
                                     TQMG.Color(0, 25, 0);
                                 }
-                                if (y >= 0 && y < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, TextY + 64 + (y* 16));
+                                if (iy >= 0 && iy < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, iy);
                                 y++;
                                 if (Void.ms.Y>y && Void.ms.Y<y+16 && Void.ms.X>OutX && Void.ms.X < TQMG.ScrWidth - 10) {
                                     Project.ChosenProject.CurrentItem = V;
