@@ -22,11 +22,11 @@ namespace Void.Lex {
             throw new NotImplementedException();
         }
 
-        public override void Outline(Document doc) {
+        public override void Outline(Document doc) {            
             throw new NotImplementedException();
         }
 
-        string[] KeyWords;
+        protected string[] KeyWords;
 
     }
 }

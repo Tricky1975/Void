@@ -126,6 +126,7 @@
       <Link>Dependencies\Tricky%27s Units\qstream.cs</Link>
     </Compile>
     <Compile Include="Lex\Lex.cs" />
+    <Compile Include="Lex\LexNIL.cs" />
     <Compile Include="Parts\Config.cs" />
     <Compile Include="Parts\Document.cs" />
     <Compile Include="Parts\Project.cs" />
