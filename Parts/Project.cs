@@ -38,9 +38,12 @@ namespace Void.Parts {
             public string filename = "";
             internal ItemType Type;
             internal void Load() {
-
+                Doc = Document.Load(filename);
             }
         }
+
+        internal Item CurrentItem = null;
+        internal Document CurrentDoc => CurrentItem.Doc;
 
         public Project(string dir) {
             if (!Void.Assert(Directory.Exists(dir),$"Directory {dir} does not exist")) return;
