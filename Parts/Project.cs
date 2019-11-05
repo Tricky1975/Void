@@ -31,7 +31,7 @@ namespace Void.Parts {
         internal prjcfg CFG;
 
         internal class Item {
-            public Document Doc=null;
+            public Document Doc = null;
             readonly public TMap<string, Item> SubDirectory = new TMap<string, Item>();
             public Item Parent = null;
             public Project Prj = null;
@@ -43,7 +43,14 @@ namespace Void.Parts {
         }
 
         internal Item CurrentItem = null;
-        internal Document CurrentDoc => CurrentItem.Doc;
+        internal Document CurrentDoc {
+            get {
+                if (CurrentItem == null)
+                    return null;
+                else
+                    return CurrentItem.Doc;
+            }
+        }
 
         public Project(string dir) {
             if (!Void.Assert(Directory.Exists(dir),$"Directory {dir} does not exist")) return;
