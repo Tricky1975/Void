@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 19.10.31
+// Version: 19.11.05
 // EndLic
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -177,6 +177,7 @@ namespace Void {
         }
     }
 }
+
 
 
 

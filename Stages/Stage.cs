@@ -21,7 +21,7 @@
 // Please note that some references to data like pictures or audio, do not automatically
 // fall under this licenses. Mostly this is noted in the respective files.
 // 
-// Version: 19.10.31
+// Version: 19.11.05
 // EndLic
 
 using System;
@@ -57,6 +57,7 @@ namespace Void.Stages {
         public static void GoTo(Stage s) { if (s != null) Current = s; }
     }
 }
+
 
 
 
