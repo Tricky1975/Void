@@ -43,6 +43,8 @@ namespace Void {
         TQMGImage MousePointer;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        
         static internal TQMGImage VoidBack;
 
         static public KeyboardState kb { get; private set; }

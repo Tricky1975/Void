@@ -110,13 +110,15 @@ namespace Void.Stages {
                                 throw new Exception($"File '{key}' appears to be marked as Non-Existent!");
                             case Project.ItemType.File:
                                 TQMG.Color(180, 255, 0);
-                                if (V == Project.ChosenProject.CurrentItem) {
-                                    TQMG.DrawRectangle(OutX, iy, TQMG.ScrWidth - OutX - 10, 16);
-                                    TQMG.Color(0, 25, 0);
-                                }
-                                if (y >= 0 && y < 8) Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, iy);
-                                if (Void.ms.Y>iy && Void.ms.Y<iy+16 && Void.ms.X>OutX && Void.ms.X < TQMG.ScrWidth - 10) {
-                                    Project.ChosenProject.CurrentItem = V;
+                                if (y >= 0 && y < 8) {
+                                    if (V == Project.ChosenProject.CurrentItem) {
+                                        TQMG.DrawRectangle(OutX, iy, TQMG.ScrWidth - OutX - 10, 16);
+                                        TQMG.Color(0, 25, 0);
+                                    }
+                                    Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, iy);
+                                    if (Void.ms.Y > iy && Void.ms.Y < iy + 16 && Void.ms.X > OutX && Void.ms.X < TQMG.ScrWidth - 10) {
+                                        Project.ChosenProject.CurrentItem = V;
+                                    }
                                 }
                                 y++;
                                 break;
@@ -140,6 +142,12 @@ namespace Void.Stages {
             var StatY = TQMG.ScrHeight - 20;
             TQMG.Color(Color.White);
             Void.Back.Draw(0, StatY, TQMG.ScrWidth, 20);
+            if (Project.ChosenProject == null || Project.ChosenProject.CurrentItem == null) {
+                TQMG.Color(Color.Red);
+                Void.Font.DrawText("No document", 0, StatY);
+            } else {
+                Void.Font.DrawText(Project.ChosenProject.CurrentItem.filename,0,StatY);
+            }
 
             // PullDown
             PullDownMenus.Draw();
