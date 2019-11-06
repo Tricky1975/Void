@@ -32,6 +32,7 @@ using UseJCR6;
 using TrickyUnits;
 using Void.Stages;
 using Void.Parts;
+using Void.Lex;
 
 namespace Void {
     /// <summary>
@@ -119,6 +120,7 @@ namespace Void {
                         Confirm.Annoy($"Project directory \"{prj}\" has not been found!");
                     }
                 }
+                new LexNIL();
             } catch (Exception QuelleCatastrophe) {
 #if DEBUG
                 FatalError($"Exception Thrown:\n{QuelleCatastrophe.Message}\n\n{QuelleCatastrophe.StackTrace}");
