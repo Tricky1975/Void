@@ -35,7 +35,7 @@ namespace Void.Parts {
     class Document {
         
         public class Line {
-            string Rawline = "";
+            public string Rawline { get; private set; } = "";
             string[] Words = null;
             public override string ToString() => Rawline;
             public override bool Equals(object obj) {
