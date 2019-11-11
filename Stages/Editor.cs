@@ -241,7 +241,8 @@ namespace Void.Stages {
                     case Keys.Right: Doc.PosX++; break;
                     case Keys.PageDown: Doc.PosY += ((Editor.TextH - Editor.TextY) / 16); break;
                     case Keys.PageUp: Doc.PosY -= ((Editor.TextH - Editor.TextY) / 16); break;
-
+                    case Keys.End: Doc.PosX = Doc.Lines[Doc.PosY].Rawline.Length; break;
+                    case Keys.Home: Doc.PosX = 0; break;
                 }
             }
             PullDownMenus.Update();

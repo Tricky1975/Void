@@ -80,6 +80,7 @@ namespace Void.Lex {
                             case '\t':
                                 endword();
                                 curword.Append(line.Rawline[i]);
+                                endword();
                                 break;
                             // Not the cleanest method, but it works :P
                             case '0':
@@ -177,6 +178,7 @@ namespace Void.Lex {
                 }
                 endword();
                 var Chars = new List<Document.Line.Char>();
+                var pl = 0;
                 foreach (string w in Words) {
                     var c = c_Gen;
                     var l = 1;
@@ -189,8 +191,10 @@ namespace Void.Lex {
                     else if ((w[0] == '"' && doubquotestring) || (w[0] == '\'' && singquotestring))
                         c = c_String;
                     for (int i = 0; i < w.Length; i++) {
-                        if (w[i] == '\t') l = 5 - (Chars.Count % 5);
-                        Chars.Add(new Document.Line.Char(w[i], c));
+                        l = 1;
+                        if (w[i] == '\t') l = 5 - (pl % 5);                        
+                        Chars.Add(new Document.Line.Char(w[i], c,l));
+                        pl += l;
                     }
                 }
                 line.Letters = Chars.ToArray(); // Needed for display
