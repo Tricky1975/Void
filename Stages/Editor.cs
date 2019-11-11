@@ -108,6 +108,10 @@ namespace Void.Stages {
                                 tx += let.cl * 8;
                             }
                         }
+                        if (Doc.PosY==lnnr && Doc.PosX == Doc.Lines[lnnr].Letters.Count()) {
+                            TQMG.Color(Color.Aquamarine);
+                            TQMG.DrawRectangle(tx, ty,  8, 16);
+                        }
                     }
                 }
             }
