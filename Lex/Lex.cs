@@ -175,7 +175,7 @@ namespace Void.Lex {
                 }
             }
             endword();
-            var Chars = new List<Document.Line.Char>();
+            var Chars = new List<Document.Line.Char>();            
             foreach (string w in Words) {
                 var c = c_Gen;
                 var l = 1;                
@@ -192,7 +192,8 @@ namespace Void.Lex {
                     Chars.Add(new Document.Line.Char(w[i], c));
                 }
             }
-
+            line.Letters = Chars.ToArray(); // Needed for display
+            line.Words = Words.ToArray(); //   Needed for outline
         }
 
         public override void Outline(Document doc) {            

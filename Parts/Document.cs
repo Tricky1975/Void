@@ -57,7 +57,8 @@ namespace Void.Parts {
             }
 
             public string Rawline { get; private set; } = "";
-            public Char[]Letters = null;
+            public Char[] Letters = null;
+            public string[] Words = null;
             public override string ToString() => Rawline;
             /*
             public override bool Equals(object obj) {
