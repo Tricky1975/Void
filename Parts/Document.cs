@@ -33,6 +33,8 @@ using TrickyUnits;
 using Microsoft.Xna.Framework;
 
 using Void.Lex;
+using Void.Parts;
+using Void.Stages;
 
 namespace Void.Parts {
 
@@ -90,8 +92,35 @@ namespace Void.Parts {
         public bool Modified = false;
         public int CleanCD;
         public readonly List<Line> Lines = new List<Line>();
-        public int posx= 0, posy = 0;
+        public int posx = 0, posy = 0;
         public int scrollx = 0, scrolly = 0;
+        public int cols => (int)Math.Floor((decimal)Editor.TextW - 180 / 16);
+        public int PosX {
+            get => posx;
+            set {
+                posx = value;
+                if (posx < 0) {
+                    PosY--;
+                    posx = Lines[posy].Rawline.Length;
+                } else if (posx> Lines[posy].Rawline.Length) {
+                    PosY++;
+                    posx = 0;
+                }
+                if (posx < scrollx) scrollx = posx;
+                while (posx - scrollx > cols) scrollx++;
+            }
+        }
+        public int PosY {
+            get => posy;
+            set {
+                posy = value;
+                if (posy < 0) posy = 0;
+                if (posy >= Lines.Count) posy = Lines.Count - 1;
+                if (posy < scrolly) scrolly = posy;
+                while (posy - scrolly > ((Editor.TextH - Editor.TextY) / 16)) scrolly++;
+                if (posx > Lines[posy].Rawline.Length) posx = Lines[posy].Rawline.Length;
+            }
+        }
 
         public string this[int l] {
             get => Lines.ElementAt(l).ToString();

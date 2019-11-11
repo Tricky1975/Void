@@ -38,20 +38,20 @@ using TrickyUnits;
 using Void.Parts;
 
 namespace Void.Stages {
-    class Editor:Stage {
+    class Editor : Stage {
 
         int lchr = 0;
 
-        int TextX => 0;
-        int TextY => 20;
+        static public int TextX => 0;
+        static public int TextY => 20;
 
         int ProjectScroll = 0;
         int FileScroll = 0;
 
         bool Insert = true;
 
-        readonly int TextW;
-        int TextH = TQMG.ScrHeight - 40;
+        static public int TextW;
+        static public int TextH = TQMG.ScrHeight - 40;
 
         Document Doc {
             get {
@@ -229,6 +229,17 @@ namespace Void.Stages {
 
             //if (ReadKey!=Keys.None) Debug.WriteLine($"ReadKey = {ReadKey} / {ReadChar}");
             if (ReadKey == Keys.Insert) Insert = !Insert;
+            if (Doc != null) {
+                switch (ReadKey) {
+                    case Keys.Up: Doc.PosY--; break;
+                    case Keys.Down: Doc.PosY++; break;
+                    case Keys.Left: Doc.PosX--; break;
+                    case Keys.Right: Doc.PosX++; break;
+                    case Keys.PageDown: Doc.PosY += ((Editor.TextH - Editor.TextY) / 16); break;
+                    case Keys.PageUp: Doc.PosY -= ((Editor.TextH - Editor.TextY) / 16); break;
+
+                }
+            }
             PullDownMenus.Update();
         }
 
