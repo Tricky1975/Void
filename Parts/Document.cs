@@ -32,6 +32,8 @@ using TrickyUnits;
 
 using Microsoft.Xna.Framework;
 
+using Void.Lex;
+
 namespace Void.Parts {
 
     class Document {
@@ -84,10 +86,12 @@ namespace Void.Parts {
             }
         }
 
+        public readonly LexBase Lexer;
         public bool Modified = false;
         public int CleanCD;
-        List<Line> Lines = new List<Line>();
+        public readonly List<Line> Lines = new List<Line>();
         public int posx= 0, posy = 0;
+        public int scrollx = 0, scrolly = 0;
 
         public string this[int l] {
             get => Lines.ElementAt(l).ToString();
@@ -106,11 +110,15 @@ namespace Void.Parts {
             CleanCD = 20000;
             CleanCD = 20000;
         }
-        public static Document Load(string file) {
+        public static Document Load(string file,LexBase L=null) {
             var s = QuickStream.LoadString(file);
-            return new Document(s);
+            return new Document(s,L);
         }
-        public Document(string txt) {
+        public Document(string txt,LexBase L=null) {
+            if (L == null)
+                Lexer = LexNothing.Me;
+            else
+                Lexer = L;
             txt = txt.Replace("\r\n", "\n");
             foreach(string l in txt.Split('\n')) {
                 var nl = new Line(l);

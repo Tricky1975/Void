@@ -38,6 +38,8 @@ using Void.Parts;
 namespace Void.Stages {
     class Editor:Stage {
 
+        int lchr = 0;
+
         int TextX => 0;
         int TextY => 20;
 
@@ -46,6 +48,14 @@ namespace Void.Stages {
 
         readonly int TextW;
         int TextH = TQMG.ScrHeight - 40;
+
+        Document Doc {
+            get {
+                if (Project.ChosenProject == null || Project.ChosenProject.CurrentItem == null || Project.ChosenProject.CurrentItem.Doc == null) 
+                    return null;
+                return Project.ChosenProject.CurrentItem.Doc;
+            }
+        }
 
         #region Init
         public Editor() {
@@ -57,12 +67,50 @@ namespace Void.Stages {
         #region Callbacks
         public override void Draw() {
 
-            // Document Content
-            Void.VoidBack.Draw((TextX + (TextW / 2)) - (Void.VoidBack.Width / 2), (TextY + (TextH / 2)) - (Void.VoidBack.Height / 2));
+            if (lchr < 256) {
+                Void.Font.DrawText($"{(char)lchr}!",0,0);
+                lchr++;
+            }
 
-            // Project, FileList and Outline
+            // Positions
+            var StatY = TQMG.ScrHeight - 20;
             var OutX = TextX + TextW;
             var OutW = TQMG.ScrWidth - (TextX + TextW);
+
+            // Document Content
+            if (Doc != null)
+                TQMG.Color(127, 127, 127);
+            Void.VoidBack.Draw((TextX + (TextW / 2)) - (Void.VoidBack.Width / 2), (TextY + (TextH / 2)) - (Void.VoidBack.Height / 2));
+            if (Doc != null) {
+                for (int lnnr = 0; lnnr < Doc.Lines.Count; lnnr++) {
+                    var py = lnnr - Doc.scrolly;
+                    var ty = TextY + (py * 16);
+                    if (ty >= TextY && ty < StatY) {
+                        TQMG.Color(127, 127, 127);
+                        Void.Font.DrawText($"{lnnr + 1} {(char)186}", TextX + (144), ty, TQMG_TextAlign.Right);
+                    }
+                    var tx = 172;
+                    if (Doc.Lines[lnnr].Letters == null) Doc.Lexer.Chop(Doc.Lines[lnnr]);
+                    if (Doc.Lines[lnnr].Letters != null) {
+                        for (int psnr = 0; psnr < Doc.Lines[lnnr].Letters.Count(); psnr++) {
+                            if (psnr >= Doc.scrollx && tx < TextW) {
+                                var let = Doc.Lines[lnnr].Letters[psnr];
+                                TQMG.Color(let.Col);
+                                if (psnr == Doc.posx && lnnr == Doc.posy) {
+                                    TQMG.DrawRectangle(tx, ty, let.cl * 8, 16);
+                                    TQMG.Color((byte)(255 - let.Col.R), (byte)(255 - let.Col.G), (byte)(255 - let.Col.B));
+                                }
+                                if (let.str != ' ' && let.str != '\t') Void.Font.fimg.Draw(tx, ty, (byte)let.str);
+                                tx += let.cl * 8;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            // Project, FileList and Outline
+            TQMG.Color(255, 255, 255);
             Void.Back.Draw(OutX, TextY, TextX + TextW, TextY, OutW, TextW);
             // Project list
             TQMG.Color(255, 0, 0);
@@ -139,7 +187,6 @@ namespace Void.Stages {
             }
 
             // Status bar
-            var StatY = TQMG.ScrHeight - 20;
             TQMG.Color(Color.White);
             Void.Back.Draw(0, StatY, TQMG.ScrWidth, 20);
             if (Project.ChosenProject == null || Project.ChosenProject.CurrentItem == null) {
@@ -148,7 +195,7 @@ namespace Void.Stages {
             } else {
                 Void.Font.DrawText(Project.ChosenProject.CurrentItem.filename, 0, StatY);
                 if (Project.ChosenProject.CurrentDoc != null)
-                    Void.Font.DrawText($"Ln:{Project.ChosenProject.CurrentDoc.posy + 1}; Pos:{Project.ChosenProject.CurrentDoc.posx + 1}", TQMG.ScrWidth - 10, StatY, TQMG_TextAlign.Right);
+                    Void.Font.DrawText($"(Ln:{Project.ChosenProject.CurrentDoc.posy + 1}; Pos:{Project.ChosenProject.CurrentDoc.posx + 1})", TQMG.ScrWidth - 10, StatY, TQMG_TextAlign.Right);
                 else {
                     TQMG.Color(Color.Red);
                     Void.Font.DrawText("Doc Failure!",TQMG.ScrWidth - 10, StatY, TQMG_TextAlign.Right);

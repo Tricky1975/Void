@@ -31,6 +31,8 @@ using System.Text;
 using System.Diagnostics;
 using TrickyUnits;
 
+using Void.Lex;
+
 namespace Void.Parts {
     class Project {
 
@@ -82,7 +84,7 @@ namespace Void.Parts {
                             Confirm.Annoy($"Failed to load document:\n\n{CurrentItem.filename}\n\n{FoutjeBedankt.Message}");
                             return null;
                         }
-                        CurrentItem.Doc = new Document(t);
+                        CurrentItem.Doc = new Document(t,LexBase.Reg[qstr.ExtractExt(CurrentItem.filename.ToLower())]);
                     }
                     return CurrentItem.Doc;
                 }
