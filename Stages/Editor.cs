@@ -116,7 +116,7 @@ namespace Void.Stages {
                                         TQMG.Color(0, 25, 0);
                                     }
                                     Void.Font.DrawText($"F> {qstr.Str(" ", tab)}{key}", OutX, iy);
-                                    if (Void.ms.Y > iy && Void.ms.Y < iy + 16 && Void.ms.X > OutX && Void.ms.X < TQMG.ScrWidth - 10) {
+                                    if (Void.ms.Y > iy && Void.ms.Y < iy + 16 && Void.ms.X > OutX && Void.ms.X < TQMG.ScrWidth - 10 && Void.ms.LeftButton==Microsoft.Xna.Framework.Input.ButtonState.Pressed) {
                                         Project.ChosenProject.CurrentItem = V;
                                     }
                                 }
