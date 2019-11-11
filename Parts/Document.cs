@@ -30,14 +30,36 @@ using System.Linq;
 using System.Text;
 using TrickyUnits;
 
+using Microsoft.Xna.Framework;
+
 namespace Void.Parts {
 
     class Document {
         
         public class Line {
+
+            public class Char {
+                public char str;
+                public override string ToString() => $"{str}";
+                public Color Col;
+                public int cl = 1;
+
+                public Char(char s, byte R, byte G, byte B,int l=1) {
+                    str = s;
+                    Col = new Color(R, G, B);
+                    cl = l;
+                }
+                public Char(char s,Color c,int l=1) {
+                    str = s;
+                    Col = c;
+                    cl = l;
+                }
+            }
+
             public string Rawline { get; private set; } = "";
-            string[] Words = null;
+            public Char[]Letters = null;
             public override string ToString() => Rawline;
+            /*
             public override bool Equals(object obj) {
                 if (obj.GetType() == typeof(Line))
                     return obj.ToString() == Rawline;
@@ -46,6 +68,7 @@ namespace Void.Parts {
                 else
                     throw new Exception("Illegal Line comparing");
             }
+            */
 
             void Chop() {
                 // TODO: Chop up!
