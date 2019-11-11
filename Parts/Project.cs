@@ -73,8 +73,19 @@ namespace Void.Parts {
             get {
                 if (CurrentItem == null)
                     return null;
-                else
+                else {
+                    if (CurrentItem.Doc == null) {
+                        var t = "";
+                        try {
+                            t = QuickStream.LoadString(CurrentItem.filename);
+                        } catch (Exception FoutjeBedankt) {
+                            Confirm.Annoy($"Failed to load document:\n\n{CurrentItem.filename}\n\n{FoutjeBedankt.Message}");
+                            return null;
+                        }
+                        CurrentItem.Doc = new Document(t);
+                    }
                     return CurrentItem.Doc;
+                }
             }
         }
 

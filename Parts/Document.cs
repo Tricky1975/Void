@@ -87,6 +87,8 @@ namespace Void.Parts {
         public bool Modified = false;
         public int CleanCD;
         List<Line> Lines = new List<Line>();
+        public int posx= 0, posy = 0;
+
         public string this[int l] {
             get => Lines.ElementAt(l).ToString();
             set => Lines.ElementAt(l).Define(value);            

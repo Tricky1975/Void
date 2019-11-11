@@ -146,7 +146,13 @@ namespace Void.Stages {
                 TQMG.Color(Color.Red);
                 Void.Font.DrawText("No document", 0, StatY);
             } else {
-                Void.Font.DrawText(Project.ChosenProject.CurrentItem.filename,0,StatY);
+                Void.Font.DrawText(Project.ChosenProject.CurrentItem.filename, 0, StatY);
+                if (Project.ChosenProject.CurrentDoc != null)
+                    Void.Font.DrawText($"Ln:{Project.ChosenProject.CurrentDoc.posy + 1}; Pos:{Project.ChosenProject.CurrentDoc.posx + 1}", TQMG.ScrWidth - 10, StatY, TQMG_TextAlign.Right);
+                else {
+                    TQMG.Color(Color.Red);
+                    Void.Font.DrawText("Doc Failure!",TQMG.ScrWidth - 10, StatY, TQMG_TextAlign.Right);
+                }
             }
 
             // PullDown
