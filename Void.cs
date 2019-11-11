@@ -51,7 +51,123 @@ namespace Void {
         static public KeyboardState kb { get; private set; }
         static public KeyboardState oldkb { get; private set; }
         static public MouseState ms { get; private set; }
+        static internal TMap<Keys, int> KeyHold = new TMap<Keys, int>();
 
+
+        static Keys DoReadKey {
+            get {
+                bool Has(Keys[]a, Keys k) { foreach (Keys ck in a) if (ck == k) return true; return false; }
+                var pressed = kb.GetPressedKeys();
+                var ret = Keys.None;
+                foreach(Keys k in (Keys[])Enum.GetValues(typeof(Keys))) {
+                    if (!Has(pressed, k))
+                        KeyHold[k] = 0;
+                    else {
+                        KeyHold[k]++;
+                        if (((!oldkb.IsKeyDown(k)) || KeyHold[k] > 40) && k!=Keys.RightShift && k!=Keys.LeftShift && k!=Keys.LeftControl && k!=Keys.RightControl && k!=Keys.LeftAlt && k!=Keys.RightAlt)
+                            ret = k;
+                    }
+                }
+                return ret;
+            }
+        }
+        static public Keys ReadKey { get; private set; } = Keys.None;
+        static public bool Shift => kb.IsKeyDown(Keys.LeftShift) || kb.IsKeyDown(Keys.RightShift);
+
+        static public char ReadChar { get {
+                if (kb.IsKeyDown(Keys.LeftControl) || kb.IsKeyDown(Keys.RightControl)) return '\0';
+                switch (ReadKey) {
+                    case Keys.NumPad0: return '0';
+                    case Keys.NumPad1: return '1';
+                    case Keys.NumPad2: return '2';
+                    case Keys.NumPad3: return '3';
+                    case Keys.NumPad4: return '4';
+                    case Keys.NumPad5: return '5';
+                    case Keys.NumPad6: return '6';
+                    case Keys.NumPad7: return '7';
+                    case Keys.NumPad8: return '8';
+                    case Keys.NumPad9: return '9';
+                    case Keys.A:
+                    case Keys.B:
+                    case Keys.C:
+                    case Keys.D:
+                    case Keys.E:
+                    case Keys.F:
+                    case Keys.G:
+                    case Keys.H:
+                    case Keys.I:
+                    case Keys.J:
+                    case Keys.K:
+                    case Keys.L:
+                    case Keys.M:
+                    case Keys.N:
+                    case Keys.O:
+                    case Keys.P:
+                    case Keys.Q:
+                    case Keys.R:
+                    case Keys.S:
+                    case Keys.T:
+                    case Keys.U:
+                    case Keys.V:
+                    case Keys.W:
+                    case Keys.X:
+                    case Keys.Y:
+                    case Keys.Z: {
+                            var k = ReadKey.ToString();
+                            if (kb.IsKeyDown(Keys.LeftShift) || kb.IsKeyDown(Keys.RightShift) || kb.CapsLock)
+                                return k[0];
+                            else
+                                return k.ToLower()[0];
+                        }
+                    case Keys.D0:
+                        if (Shift) return ')'; else return '0';
+                    case Keys.D1:
+                        if (Shift) return '!'; else return '1';
+                    case Keys.D2:
+                        if (Shift) return '@'; else return '2';
+                    case Keys.D3:
+                        if (Shift) return '#'; else return '3';
+                    case Keys.D4:
+                        if (Shift) return '$'; else return '4';
+                    case Keys.D5:
+                        if (Shift) return '%'; else return '5';
+                    case Keys.D6:
+                        if (Shift) return '^'; else return '6';
+                    case Keys.D7:
+                        if (Shift) return '&'; else return '7';
+                    case Keys.D8:
+                        if (Shift) return '*'; else return '0';
+                    case Keys.D9:
+                        if (Shift) return '('; else return '0';
+                    case Keys.OemMinus:
+                        if (Shift) return '-'; else return '_';
+                    case Keys.OemPlus:
+                        if (Shift) return '='; else return '+';
+                    case Keys.OemPipe:
+                        if (Shift) return '\\'; else return '|';
+                    case Keys.Multiply: return '*';
+                    case Keys.Tab: return '\t';
+                    case Keys.OemOpenBrackets:
+                        if (Shift) return '{'; else return '[';
+                    case Keys.OemCloseBrackets:
+                        if (Shift) return '}'; else return ']';
+                    case Keys.OemSemicolon:
+                        if (Shift) return ';'; else return ':';
+                    case Keys.OemQuotes:
+                        if (Shift) return '\''; else return '"';
+                    case Keys.OemComma:
+                        if (Shift) return ','; else return '<';
+                    case Keys.OemPeriod:
+                        if (Shift) return '.'; else return '>';
+                    case Keys.OemQuestion:
+                        if (Shift) return '/'; else return '?';
+                    default:
+                        //System.Diagnostics.Debug.WriteLine($"Pressed unknown key {ReadKey}");
+                        break;
+                }
+                return '\0';
+            }
+        }
 
         static public void FatalError(string msg) {
             Confirm.Annoy(msg, "Void - FATAL ERROR", System.Windows.Forms.MessageBoxIcon.Error);
@@ -149,6 +265,7 @@ namespace Void {
             oldkb = kb;
             ms = Mouse.GetState();
             kb = Keyboard.GetState();
+            ReadKey = DoReadKey;
             if (StopIt || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kb.IsKeyDown(Keys.Escape))
                 Exit();
 

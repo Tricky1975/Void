@@ -28,8 +28,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 using TrickyUnits;
 
@@ -45,6 +47,8 @@ namespace Void.Stages {
 
         int ProjectScroll = 0;
         int FileScroll = 0;
+
+        bool Insert = true;
 
         readonly int TextW;
         int TextH = TQMG.ScrHeight - 40;
@@ -200,6 +204,17 @@ namespace Void.Stages {
                     TQMG.Color(Color.Red);
                     Void.Font.DrawText("Doc Failure!",TQMG.ScrWidth - 10, StatY, TQMG_TextAlign.Right);
                 }
+                if (Insert) {
+                    TQMG.Color(Color.White);
+                    Void.Font.DrawText("Insert", TQMG.ScrWidth - 300, StatY, TQMG_TextAlign.Center);
+                } else {
+                    TQMG.Color(Color.Violet);
+                    Void.Font.DrawText("Overwrite", TQMG.ScrWidth - 300, StatY, TQMG_TextAlign.Center);
+                }
+                if (Void.kb.CapsLock) {
+                    TQMG.Color(Color.Tomato);
+                    Void.Font.DrawText("Caps Lock", TQMG.ScrWidth - 400, StatY, TQMG_TextAlign.Center);
+                }
             }
 
             // PullDown
@@ -207,7 +222,13 @@ namespace Void.Stages {
 
         }
 
+        Keys ReadKey => Void.ReadKey;
+        char ReadChar => Void.ReadChar;
+
         public override void Update() {
+
+            //if (ReadKey!=Keys.None) Debug.WriteLine($"ReadKey = {ReadKey} / {ReadChar}");
+            if (ReadKey == Keys.Insert) Insert = !Insert;
             PullDownMenus.Update();
         }
 
