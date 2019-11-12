@@ -179,6 +179,7 @@ namespace Void.Parts {
                 var nl = new Line(l);
                 Lines.Add(nl);
             }
+            Lexer.Outline(this);
         }
 
     }

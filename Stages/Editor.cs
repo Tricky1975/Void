@@ -231,6 +231,7 @@ namespace Void.Stages {
 
         int ChangedTimer = 0;
         List<Document.Line> ChangedLines = new List<Document.Line>();
+        int OutLineCD = 0;
 
         public override void Update() {
 
@@ -271,11 +272,16 @@ namespace Void.Stages {
                     }
                 }
                 if (ChangedTimer > 0) {
+                    OutLineCD += ChangedTimer;
                     --ChangedTimer;
                     if (ChangedTimer == 0) {
                         foreach (Document.Line L in ChangedLines) Doc.Lexer.Chop(L);
                         ChangedLines.Clear();
                     }
+                }
+                if (OutLineCD > 0) {
+                    --OutLineCD;
+                    if (OutLineCD == 0) Doc.Lexer.Outline(Doc);
                 }
             }
             PullDownMenus.Update();
