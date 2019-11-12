@@ -60,7 +60,7 @@ namespace Void.Lex {
                 var curword = new StringBuilder();
                 var instring = false;
                 var incomment = false;
-                void endword() { if (curword.Length > 0) Words.Add(curword.ToString()); curword.Clear(); }
+                void endword() { if (curword.Length > 0) Words.Add(curword.ToString()); curword.Clear(); }                
                 for (int i = 0; i < line.Rawline.Length; i++) {
                     if (instring) {
                         if (line.Rawline[i] == curword[0] && line.Rawline[i - 1] != escape) {
@@ -145,7 +145,7 @@ namespace Void.Lex {
                             case 'w':
                             case 'x':
                             case 'y':
-                            case 'z':
+                            case 'z':                            
                                 curword.Append(line.Rawline[i]);
                                 break;
                             case '"':

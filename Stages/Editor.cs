@@ -196,11 +196,15 @@ namespace Void.Stages {
             }
 
             // Outline            
-            if (!(Project.ChosenProject == null || Project.ChosenProject.CurrentItem == null)) {
+            if (Project.ChosenProject != null && Project.ChosenProject.CurrentItem != null) {
                 TQMG.Color(0, 180, 255);
                 var y = 0;
                 var ty = TextY + 64 + 128;
-                foreach(string n in Project.ChosenProject.CurrentDoc.Outline.Keys) {
+                if (Project.ChosenProject.CurrentDoc.Outline.Count==0) {
+                    TQMG.Color(255, 0, 180);
+                    Void.Font.DrawText("Nothing to outline", OutX, ty);
+                }
+                foreach(string n in Project.ChosenProject.CurrentDoc.Outline.Keys) {                    
                     if(y>=OutLineScroll && ty < StatY-16) {
                         Void.Font.DrawText(n, OutX, ty);
                         ty += 16;
