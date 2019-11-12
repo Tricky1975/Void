@@ -297,6 +297,26 @@ namespace Void.Stages {
                                 ChangedLines.Add(Doc.Lines[Doc.PosY]);
                             }
                         } break;
+                    case Keys.Enter:
+                        var whitespace = "";
+                        for (int i = 0; i < Doc[Doc.PosY].Length && (Doc[Doc.PosY][i] == ' ' || Doc[Doc.PosY][i] == '\t'); i++) whitespace += Doc[Doc.PosY][i]; // Never believed that awkward C syntax for 'for' definitions would be handy one day :P
+                        if (Doc.PosX == Doc[Doc.PosY].Length) {
+                            Doc.Lines.Insert(Doc.PosY + 1, new Document.Line(whitespace));
+                            Doc.PosY++;
+                            Doc.PosX = whitespace.Length;
+                            ChangedTimer = 2;
+                            ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                        } else {
+                            var rest = Doc[Doc.PosY].Substring(Doc.PosX);
+                            Doc[Doc.PosY] = Doc[Doc.PosY].Substring(0, Doc.PosX);
+                            Doc.Lines.Insert(Doc.PosY + 1, new Document.Line($"{whitespace}{rest}"));
+                            ChangedTimer = 2;
+                            ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                            ChangedLines.Add(Doc.Lines[Doc.PosY+1]);
+                            Doc.PosY++;
+                            Doc.PosX = whitespace.Length;
+                        }
+                        break;
                 }
                 if (ReadChar != '\0') {
                     if (Doc.PosX == Doc.Lines[Doc.PosY].Rawline.Length) {
