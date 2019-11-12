@@ -109,15 +109,15 @@ namespace Void.Parts {
                             cd[dc[ak]] = ni;
                             ni.Parent = ci;
                             ni.Type = ItemType.Directory;
-                            ni.Prj = this;                            
+                            ni.Prj = this;
                         }
                         ci = cd[dc[ak]];
                         cd = cd[dc[ak]].SubDirectory;
                         i.Parent = ci;
-                        i.Type = ItemType.File;
                     }
+                    i.Type = ItemType.File;
                     cd[qstr.StripDir(f)] = i;
-                    Debug.WriteLine($"Project: {dir};\t\t{f} found and added!");
+                    Debug.WriteLine($"Project: {dir};\t\t{f} found and added!   ({i.Type})");
                 }
             }
             if (!Config.Has("Projects", dir)) Config.Add("Projects", dir);
