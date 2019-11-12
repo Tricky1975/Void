@@ -283,6 +283,18 @@ namespace Void.Stages {
                                 Doc.PosX--;
                                 ChangedTimer = 3;
                                 ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                            } else if (Doc.PosX==0 && Doc.PosY > 0) {
+                                Doc.PosY--;
+                                Doc.PosX = Doc.Lines[Doc.PosY].Rawline.Length;
+                                Doc.Lines[Doc.PosY].Rawline += Doc.Lines[Doc.PosY + 1].Rawline;
+                                Doc.Lines.RemoveAt(Doc.PosY + 1);
+                                ChangedTimer = 6;
+                                ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                            } else if (Doc.PosX > 0) {
+                                Doc[Doc.PosY] = $"{Doc[Doc.PosY].Substring(0, Doc.PosX - 1)}{Doc[Doc.PosY].Substring(Doc.PosX)}";
+                                Doc.PosX--;
+                                ChangedTimer = 2;
+                                ChangedLines.Add(Doc.Lines[Doc.PosY]);
                             }
                         } break;
                 }
