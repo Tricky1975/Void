@@ -1,0 +1,9 @@
+group Hello
+
+	void Run()
+		print("Hello World!")
+	end
+
+end
+
+Hello.Run()
