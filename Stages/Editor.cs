@@ -229,6 +229,9 @@ namespace Void.Stages {
         Keys ReadKey => Void.ReadKey;
         char ReadChar => Void.ReadChar;
 
+        int ChangedTimer = 0;
+        List<Document.Line> ChangedLines = new List<Document.Line>();
+
         public override void Update() {
 
             //if (ReadKey!=Keys.None) Debug.WriteLine($"ReadKey = {ReadKey} / {ReadChar}");
@@ -243,6 +246,29 @@ namespace Void.Stages {
                     case Keys.PageUp: Doc.PosY -= ((Editor.TextH - Editor.TextY) / 16); break;
                     case Keys.End: Doc.PosX = Doc.Lines[Doc.PosY].Rawline.Length; break;
                     case Keys.Home: Doc.PosX = 0; break;
+                    case Keys.Back: {
+                            if (Doc.PosX == Doc.Lines[Doc.PosY].Rawline.Length && Doc[Doc.PosY]!="") {
+                                Doc[Doc.PosY] = qstr.Left(Doc[Doc.PosY], Doc[Doc.PosY].Length - 1);
+                                Doc.PosX--;
+                                ChangedTimer = 3;
+                                ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                            }
+                        } break;
+                }
+                if (ReadChar != '\0') {
+                    if (Doc.PosX == Doc.Lines[Doc.PosY].Rawline.Length) {
+                        ChangedTimer = 5;
+                        ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                        Doc[Doc.PosY] += ReadChar;
+                        Doc.PosX++;
+                    }
+                }
+                if (ChangedTimer > 0) {
+                    --ChangedTimer;
+                    if (ChangedTimer == 0) {
+                        foreach (Document.Line L in ChangedLines) Doc.Lexer.Chop(L);
+                        ChangedLines.Clear();
+                    }
                 }
             }
             PullDownMenus.Update();

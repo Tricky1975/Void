@@ -60,7 +60,7 @@ namespace Void.Parts {
                 }
             }
 
-            public string Rawline { get; private set; } = "";
+            public string Rawline = "";
             public Char[] Letters = null;
             public string[] Words = null;
             public override string ToString() => Rawline;
@@ -79,11 +79,14 @@ namespace Void.Parts {
                 // TODO: Chop up!
             }
 
+            /* Done differently... 
             public void Define(string str) {
                 Rawline = str;
             }
+            */
+
             public Line(string s) {
-                Define(s);
+                Rawline=s;
                 Chop();
             }
         }
@@ -124,7 +127,7 @@ namespace Void.Parts {
 
         public string this[int l] {
             get => Lines.ElementAt(l).ToString();
-            set => Lines.ElementAt(l).Define(value);            
+            set => Lines.ElementAt(l).Rawline = value;            
         }
 
         public override string ToString() {

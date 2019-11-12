@@ -140,9 +140,9 @@ namespace Void {
                     case Keys.D9:
                         if (Shift) return '('; else return '0';
                     case Keys.OemMinus:
-                        if (Shift) return '-'; else return '_';
+                        if (!Shift) return '-'; else return '_';
                     case Keys.OemPlus:
-                        if (Shift) return '='; else return '+';
+                        if (!Shift) return '='; else return '+';
                     case Keys.OemPipe:
                         if (Shift) return '\\'; else return '|';
                     case Keys.Multiply: return '*';
@@ -152,15 +152,17 @@ namespace Void {
                     case Keys.OemCloseBrackets:
                         if (Shift) return '}'; else return ']';
                     case Keys.OemSemicolon:
-                        if (Shift) return ';'; else return ':';
+                        if (!Shift) return ';'; else return ':';
                     case Keys.OemQuotes:
-                        if (Shift) return '\''; else return '"';
+                        if (!Shift) return '\''; else return '"';
                     case Keys.OemComma:
-                        if (Shift) return ','; else return '<';
+                        if (!Shift) return ','; else return '<';
                     case Keys.OemPeriod:
-                        if (Shift) return '.'; else return '>';
+                        if (!Shift) return '.'; else return '>';
                     case Keys.OemQuestion:
-                        if (Shift) return '/'; else return '?';
+                        if (!Shift) return '/'; else return '?';
+                    case Keys.Space:
+                        return ' ';
                     default:
                         //System.Diagnostics.Debug.WriteLine($"Pressed unknown key {ReadKey}");
                         break;
