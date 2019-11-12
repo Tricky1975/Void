@@ -193,6 +193,16 @@ namespace Void.Stages {
                     }
                 }
                 if (Project.ChosenProject != null) PS();
+                if (FileScroll != 0) {
+                    TQMG.Color(180, 255, 0);
+                    Void.Font.DrawText($"{(char)30}", TQMG.ScrWidth, TextY + 64,TQMG_TextAlign.Right);
+                    if (Void.ms.LeftButton == ButtonState.Pressed && Void.ms.X > TQMG.ScrWidth - 8 && Void.ms.Y > TextY + 64 && Void.ms.Y < TextY + 80) FileScroll--;
+                }
+                if (y > 8) {
+                    TQMG.Color(180, 255, 0);
+                    Void.Font.DrawText($"{(char)31}", TQMG.ScrWidth, TextY + 64 + 112, TQMG_TextAlign.Right);
+                    if (Void.ms.LeftButton == ButtonState.Pressed && Void.ms.X > TQMG.ScrWidth - 8 && Void.ms.Y > TextY + 64 + 112 && Void.ms.Y < TextY + 64 + 128) FileScroll++;
+                }
             }
 
             // Outline            

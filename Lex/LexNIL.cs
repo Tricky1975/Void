@@ -114,6 +114,14 @@ void Chat(string msg) {
                                 newID(words[i + 1], ln);
                             }
                             break;
+                        case "get":
+                        case "set":
+                            if (i > words.Length - 2) fail = true; else {
+                                newscope("property");
+                                newID($"{nclass}{words[i+2]} * {w.ToUpper()} ",ln);
+                                broken = true;
+                            }
+                            break;
                         case "void":
                         case "int":
                         case "number":
