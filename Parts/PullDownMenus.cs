@@ -43,6 +43,8 @@ namespace Void.Parts {
 
         public delegate void CallBackVoid();
         public delegate bool RequireBool();
+        readonly RequireBool NeedDoc = delegate { return Project.ChosenProject != null && Project.ChosenProject.CurrentDoc!=null; };
+
         public enum Heads {
             File,
             Edit,
@@ -81,7 +83,10 @@ namespace Void.Parts {
                 case Heads.File:
                     new PullDownMenus(id, "Open Project Folder", Project.OpenProject, Keys.P);
                     new PullDownMenus(id, "New File", NOTHING, Keys.N,delegate { return Project.ChosenProject != null; } );
-                    new PullDownMenus(id, "Save", NOTHING, Keys.S);
+                    new PullDownMenus(id, "Save", delegate {
+                        //Debug.WriteLine($"[SAVE]{Project.ChosenProject.CurrentDoc}[/SAVE]");
+                        Project.ChosenProject.CurrentDoc.Save(Project.ChosenProject.CurrentItem.filename);
+                    }, Keys.S,NeedDoc);
                     new PullDownMenus(id, "Save As", NOTHING);
                     new PullDownMenus(id, "Save All", NOTHING);
                     new PullDownMenus(id, "Quit", NOTHING);

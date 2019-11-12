@@ -157,7 +157,11 @@ namespace Void.Parts {
 
         public override string ToString() {
             var ret = new StringBuilder(1);
-            foreach (Line l in Lines) ret.Append($"{l}");
+            var nl = false;
+            foreach (Line l in Lines) {
+                if (nl) ret.Append('\n'); nl = true;
+                ret.Append($"{l}");
+            }
             return $"{ret}";
         }
 

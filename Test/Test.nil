@@ -22,8 +22,11 @@ group Hello
 	void Run()
 		print("Hello World!")
 	end
+	
+	void Haai()
+		print("Walvis")
+	end
 
 end
 
 Hello.Run()
-
