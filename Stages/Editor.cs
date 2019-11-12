@@ -261,6 +261,13 @@ namespace Void.Stages {
                         ChangedLines.Add(Doc.Lines[Doc.PosY]);
                         Doc[Doc.PosY] += ReadChar;
                         Doc.PosX++;
+                    } else {
+                        var plus = 0;
+                        if (!Insert) plus = 1;
+                        Doc[Doc.PosY] = $"{Doc[Doc.PosY].Substring(0, Doc.PosX)}{ReadChar}{Doc[Doc.PosY].Substring(Doc.PosX + plus)}";
+                        ChangedTimer = 6;
+                        ChangedLines.Add(Doc.Lines[Doc.PosY]);
+                        Doc.PosX++;
                     }
                 }
                 if (ChangedTimer > 0) {
