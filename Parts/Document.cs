@@ -65,10 +65,12 @@ namespace Void.Parts {
             public Char[] Letters = null;
             public string[] Words = null;
             public string Word(int i) {
-                foreach(string w in Words) {
-                    if (w!=" " && w != "\t") {
-                        if (i == 0) return w;
-                        i--;
+                if (Words != null) {
+                    foreach (string w in Words) {
+                        if (w != " " && w != "\t") {
+                            if (i == 0) return w;
+                            i--;
+                        }
                     }
                 }
                 throw new Exception("Word call out of range!");
@@ -76,14 +78,14 @@ namespace Void.Parts {
             public int WordCount {
                 get {
                     var c = 0;
-                    foreach (string w in Words) if (w != " " && w != "\t") c++;
+                    if (Words != null) foreach (string w in Words) if (w != " " && w != "\t") c++;
                     return c;
                 }
             }
             public string[] GetWords {
                 get {
                     var ret = new List<string>();
-                    foreach (string w in Words) if (w != " " && w != "\t") ret.Add(w);
+                    if (Words!=null) foreach (string w in Words) if (w != " " && w != "\t") ret.Add(w);
                     return ret.ToArray();
                 }
             }

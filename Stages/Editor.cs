@@ -47,6 +47,7 @@ namespace Void.Stages {
 
         int ProjectScroll = 0;
         int FileScroll = 0;
+        int OutLineScroll = 0;
 
         bool Insert = true;
 
@@ -194,8 +195,21 @@ namespace Void.Stages {
                 if (Project.ChosenProject != null) PS();
             }
 
-            // Status bar
-            TQMG.Color(Color.White);
+            // Outline            
+            if (!(Project.ChosenProject == null || Project.ChosenProject.CurrentItem == null)) {
+                TQMG.Color(0, 180, 255);
+                var y = 0;
+                var ty = TextY + 64 + 128;
+                foreach(string n in Project.ChosenProject.CurrentDoc.Outline.Keys) {
+                    if(y>=OutLineScroll && ty < StatY-16) {
+                        Void.Font.DrawText(n, OutX, ty);
+                        ty += 16;
+                    }
+                }
+            }
+
+                // Status bar
+                TQMG.Color(Color.White);
             Void.Back.Draw(0, StatY, TQMG.ScrWidth, 20);
             if (Project.ChosenProject == null || Project.ChosenProject.CurrentItem == null) {
                 TQMG.Color(Color.Red);
@@ -220,6 +234,8 @@ namespace Void.Stages {
                     Void.Font.DrawText("Caps Lock", TQMG.ScrWidth - 400, StatY, TQMG_TextAlign.Center);
                 }
             }
+
+
 
             // PullDown
             PullDownMenus.Draw();
