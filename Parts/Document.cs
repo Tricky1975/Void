@@ -61,7 +61,6 @@ namespace Void.Parts {
             }
 
 
-            public TMap<string, int> Outline = new TMap<string, int>();
             public string Rawline = "";
             public Char[] Letters = null;
             public string[] Words = null;
@@ -79,6 +78,13 @@ namespace Void.Parts {
                     var c = 0;
                     foreach (string w in Words) if (w != " " && w != "\t") c++;
                     return c;
+                }
+            }
+            public string[] GetWords {
+                get {
+                    var ret = new List<string>();
+                    foreach (string w in Words) if (w != " " && w != "\t") ret.Add(w);
+                    return ret.ToArray();
                 }
             }
 
@@ -106,6 +112,7 @@ namespace Void.Parts {
             }
         }
 
+        public TMap<string, int> Outline = new TMap<string, int>();
         public readonly LexBase Lexer;
         public bool Modified = false;
         public int CleanCD;
@@ -113,6 +120,7 @@ namespace Void.Parts {
         public int posx = 0, posy = 0;
         public int scrollx = 0, scrolly = 0;
         public int cols => (int)Math.Floor((decimal)Editor.TextW - 180 / 16);
+        public int LineCount => Lines.Count;
         public int PosX {
             get => posx;
             set {
