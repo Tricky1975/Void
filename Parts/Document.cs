@@ -84,8 +84,7 @@ namespace Void.Parts {
             */
 
             public Line(string s) {
-                Rawline=s;
-                Chop();
+                Rawline=s;                
             }
         }
 
