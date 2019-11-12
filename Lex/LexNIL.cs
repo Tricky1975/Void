@@ -131,19 +131,23 @@ void Chat(string msg) {
                                     if (words[i + 1] == "(") {
                                         Chat("Quick delegate found! No outline, but a scope is needed");
                                         newscope("delegate function");
-                                    }
-                                    newID($"{nclass}{words[i + 1]}", ln);
-                                    if (words.Length > i + 2 && words[i + 2] == "(") {
-                                        Chat($"{w}-function scope started");
-                                        newscope("function");
+                                        broken = true;
                                     } else {
-                                        Chat($"{w}-variable so no scope");
+                                        newID($"{nclass}{words[i + 1]}", ln);
+                                        if (words.Length > i + 2 && words[i + 2] == "(") {
+                                            Chat($"{w}-function scope started");
+                                            newscope("function");
+                                            broken = true;
+                                        } else {
+                                            Chat($"{w}-variable so no scope");
+                                        }
                                     }
                                 }
                             } else {
                                 if (words.Length > i + 2 && words[i + 2] == "(") {
                                     Chat($"{w}- local function scope started, but outline rejected!");
                                     newscope("function");
+                                    broken = true;
                                 } else {
                                     Chat($"Variable/Function declaration rejected! Scope level({scopelevel}) too high or not in class({nclass})");
                                 }
