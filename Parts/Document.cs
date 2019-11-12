@@ -60,6 +60,7 @@ namespace Void.Parts {
                 }
             }
 
+            public TMap<string, int> Outline = new TMap<string, int>();
             public string Rawline = "";
             public Char[] Letters = null;
             public string[] Words = null;
