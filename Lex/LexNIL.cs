@@ -24,7 +24,7 @@
 // Version: 19.11.05
 // EndLic
 
-#define OverdrevenDebug
+#undef OverdrevenDebug
 
 using System;
 using System.Collections.Generic;
