@@ -76,9 +76,6 @@ namespace Void.Parts {
             }
             */
 
-            void Chop() {
-                // TODO: Chop up!
-            }
 
             /* Done differently... 
             public void Define(string str) {
